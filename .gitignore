@@ -6,6 +6,10 @@ __pycache__/
 # C extensions
 *.so
 
+# files
+data/aqi-api-key.txt
+
+
 # Distribution / packaging
 .Python
 build/
