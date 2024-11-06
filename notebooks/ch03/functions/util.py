@@ -300,6 +300,9 @@ def backfill_predictions_for_monitoring(weather_fg, air_quality_df, monitor_fg, 
     features_df = features_df.sort_values(by=['date'], ascending=True)
     features_df = features_df.tail(10)
     features_df['predicted_pm25'] = model.predict(features_df[['temperature_2m_mean', 'precipitation_sum', 'wind_speed_10m_max', 'wind_direction_10m_dominant']])
+    air_quality_df['date'] = pd.to_datetime(air_quality_df['date'])
+    features_df['date'] = features_df['date'].dt.tz_convert(None).astype('datetime64[ns]')
+    
     df = pd.merge(features_df, air_quality_df[['date','pm25','street','country']], on="date")
     df['days_before_forecast_day'] = 1
     hindcast_df = df
